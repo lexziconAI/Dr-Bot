@@ -319,26 +319,14 @@ function quantumSuperposition(principles = ['autonomy', 'beneficence', 'non-male
   const norm = Math.sqrt(principles.length);
   
   for (const principle of principles) {
-    const theta = (i / 100) * 2 * Math.PI;
-    const alpha = Math.cos(theta);
-    const beta = Math.sin(theta);
-    const gamma = Math.cos(2 * theta);
-    
-    // Probability amplitudes
-    const prob_autonomy = alpha * alpha;
-    const prob_beneficence = beta * beta;
-    const prob_justice = gamma * gamma;
-    
-    points.push({
-      autonomy: prob_autonomy,
-      beneficence: prob_beneficence,
-      justice: prob_justice,
-      entanglement: alpha * beta + beta * gamma,
-      step: i
+    const amplitude = 1.0 / norm;
+    states.push({
+      principle: principle,
+      amplitude: amplitude
     });
   }
   
-  return points;
+  return { type: 'quantum', states, principles };
 }
 
 module.exports = {
