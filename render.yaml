@@ -6,7 +6,7 @@ services:
     name: drbot-community-backend
     runtime: node
     region: oregon
-    plan: starter
+    plan: free
     buildCommand: cd backend && npm install
     startCommand: cd backend && node server.js
     envVars:
@@ -106,5 +106,5 @@ services:
   - type: redis
     name: drbot-redis
     ipAllowList: []
-    plan: starter
+    plan: free
     maxmemoryPolicy: allkeys-lru
