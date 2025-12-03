@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import api from '../services/api'
 
-const DR_BOT_ENGINE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4700'
+const DR_BOT_ENGINE_URL = 'http://localhost:15602'
 
 export default function Clinical({ user, setView }){
   const [cases, setCases] = useState([])
@@ -20,7 +20,18 @@ export default function Clinical({ user, setView }){
     { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', provider: 'Google', speed: 'Deep' },
   ]
 
-  const openSocraticCoach = async () => { try { const response = await api.post('/persona/route', { query: 'I would like Socratic coaching for a clinical case', context: { userType: 'medical_professional', urgency: 'low', preferredStyle: 'teaching' } }); console.log('Routed to persona:', response.data); window.open('/chat?persona=SAGE&mode=socratic', '_self'); } catch (err) { console.error('Persona routing error:', err); alert('Socratic Coach temporarily unavailable. Please use Chat feature.'); } }/socratic`, '_blank')
+  const openSocraticCoach = async () => {
+    try {
+      const response = await api.post('/persona/route', {
+        query: 'I would like Socratic coaching for a clinical case',
+        context: { userType: 'medical_professional', urgency: 'low', preferredStyle: 'teaching' }
+      });
+      console.log('Routed to persona:', response.data);
+      window.open('/chat?persona=SAGE&mode=socratic', '_self');
+    } catch (err) {
+      console.error('Persona routing error:', err);
+      alert('Socratic Coach temporarily unavailable. Please use Chat feature.');
+    }
   }
 
   const loadCases = async () => {
@@ -147,13 +158,13 @@ export default function Clinical({ user, setView }){
     <div>
       {/* Hero Section */}
       <div className="hero">
-        <h2>ğŸ©º Clinical Decision Support</h2>
+        <h2>­ƒ®¦ Clinical Decision Support</h2>
         <p className="lead">
           Access Dr. Bot's AI-powered clinical reasoning engine. Get evidence-based insights, differential diagnoses, and Socratic coaching for complex cases.
         </p>
         <div style={{ marginTop: 20, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <button className="button button-large" onClick={openSocraticCoach}>
-            ğŸ§  Open Socratic Coach
+            ­ƒºá Open Socratic Coach
           </button>
           <a 
             href={`${DR_BOT_ENGINE_URL}/socratic`} 
@@ -161,7 +172,7 @@ export default function Clinical({ user, setView }){
             rel="noopener noreferrer"
             className="button button-large button-secondary"
           >
-            ğŸ”— Direct Link to Coach
+            ­ƒöù Direct Link to Coach
           </a>
         </div>
       </div>
@@ -169,28 +180,28 @@ export default function Clinical({ user, setView }){
       {/* Quick Actions Grid */}
       <div className="grid-3" style={{marginBottom: 32}}>
         <div className="clinical-card" onClick={openSocraticCoach}>
-          <div className="clinical-card-icon" style={{color:'var(--primary)'}}>ğŸ§ </div>
+          <div className="clinical-card-icon" style={{color:'var(--primary)'}}>­ƒºá</div>
           <h4>Socratic Coaching</h4>
           <p>Interactive AI coaching that guides you through clinical reasoning with questions, not answers.</p>
           <span className="badge primary">Voice Enabled</span>
         </div>
         
         <div className="clinical-card" onClick={submitQuickSummary} style={{ cursor: user ? 'pointer' : 'not-allowed', opacity: user ? 1 : 0.6 }}>
-          <div className="clinical-card-icon" style={{color:'var(--secondary)'}}>ğŸ“‹</div>
+          <div className="clinical-card-icon" style={{color:'var(--secondary)'}}>­ƒôï</div>
           <h4>Quick Clinical Summary</h4>
           <p>Generate a structured clinical summary with differentials and recommended investigations.</p>
           <span className="badge warning">Async Processing</span>
         </div>
         
         <div className="clinical-card" onClick={loadCases}>
-          <div className="clinical-card-icon" style={{color:'var(--accent)'}}>ğŸ“š</div>
+          <div className="clinical-card-icon" style={{color:'var(--accent)'}}>­ƒôÜ</div>
           <h4>Case Library</h4>
           <p>Browse anonymized clinical cases for learning and reference. Explore bifurcation analyses.</p>
           <span className="badge success">Educational</span>
         </div>
 
         <div className="clinical-card" onClick={() => setView && setView('fractal')}>
-          <div className="clinical-card-icon" style={{color:'#c084fc'}}>ğŸ”¬</div>
+          <div className="clinical-card-icon" style={{color:'#c084fc'}}>­ƒö¼</div>
           <h4>Fractal Research</h4>
           <p>Run LOG3/LOG4 bifurcation experiments on wicked problems using the Constitutional AI framework.</p>
           <span className="badge" style={{background:'rgba(192, 132, 252, 0.15)', color:'#c084fc'}}>Advanced</span>
@@ -201,7 +212,7 @@ export default function Clinical({ user, setView }){
       {user && (
         <div className="card">
           <div className="card-header">
-            <h3>ğŸ’¬ Ask Dr. Bot</h3>
+            <h3>­ƒÆ¼ Ask Dr. Bot</h3>
             <select 
               value={selectedModel} 
               onChange={(e) => setSelectedModel(e.target.value)}
@@ -231,7 +242,7 @@ export default function Clinical({ user, setView }){
               onClick={submitQuery} 
               disabled={loading || !query.trim()}
             >
-              {loading ? <span className="spinner"></span> : 'ğŸš€'} Submit Query
+              {loading ? <span className="spinner"></span> : '­ƒÜÇ'} Submit Query
             </button>
             <button 
               className="button button-secondary" 
@@ -246,7 +257,7 @@ export default function Clinical({ user, setView }){
 
       {!user && (
         <div className="card" style={{ textAlign: 'center', padding: 40 }}>
-          <h3>ğŸ”’ Sign in Required</h3>
+          <h3>­ƒöÆ Sign in Required</h3>
           <p className="text-muted" style={{ marginTop: 8 }}>Please sign in to submit clinical queries. You can still access the Socratic Coach above.</p>
         </div>
       )}
@@ -258,9 +269,9 @@ export default function Clinical({ user, setView }){
             <div style={{display:'flex', alignItems:'center', gap:12}}>
               <strong>Job #{jobId}</strong>
               <span className={`badge ${jobState === 'completed' ? 'success' : jobState === 'failed' ? 'danger' : 'warning'}`}>
-                {jobState === 'completed' ? 'âœ“ Completed' : 
-                 jobState === 'failed' ? 'âœ— Failed' : 
-                 'âŸ³ Processing...'}
+                {jobState === 'completed' ? 'Ô£ô Completed' : 
+                 jobState === 'failed' ? 'Ô£ù Failed' : 
+                 'Ôƒ¦ Processing...'}
               </span>
             </div>
             {polling && <span className="text-muted">Updating...</span>}
@@ -275,10 +286,10 @@ export default function Clinical({ user, setView }){
               {!result.error && (
                 <div style={{display:'flex', gap:12}}>
                   <button className="button button-secondary" onClick={downloadJSON}>
-                    ğŸ“¥ Download JSON
+                    ­ƒôÑ Download JSON
                   </button>
                   <button className="button button-secondary" onClick={downloadMarkdown}>
-                    ğŸ“ Download Markdown
+                    ­ƒôØ Download Markdown
                   </button>
                 </div>
               )}
@@ -290,7 +301,7 @@ export default function Clinical({ user, setView }){
       {/* Case Library */}
       {cases.length > 0 && (
         <div className="card">
-          <h3>ğŸ“š Case Library</h3>
+          <h3>­ƒôÜ Case Library</h3>
           <div style={{marginTop:16, display:'flex', flexDirection:'column', gap:12}}>
             {cases.map(c => (
               <div key={c.id} style={{padding:12, background:'rgba(255,255,255,0.05)', borderRadius:8}}>
@@ -304,13 +315,13 @@ export default function Clinical({ user, setView }){
 
       {/* Info Card */}
       <div className="card" style={{ marginTop: 24, background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%)' }}>
-        <h4>ğŸ”— Engine Diagnostics</h4>
+        <h4>­ƒöù Engine Diagnostics</h4>
         <p className="text-muted" style={{ marginBottom: 12, fontSize: 13 }}>
           Advanced users can access the underlying engine status. Note: The engine root may display "Kea V4" (Voice Module) - this is normal.
         </p>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', fontSize: 13 }}>
           <a href={`${DR_BOT_ENGINE_URL}/`} target="_blank" rel="noopener noreferrer" className="text-primary">Engine Status</a>
-          <span className="text-muted">â€¢</span>
+          <span className="text-muted">ÔÇó</span>
           <a href={`${DR_BOT_ENGINE_URL}/api/models/limits`} target="_blank" rel="noopener noreferrer" className="text-primary">Model Limits</a>
         </div>
       </div>
