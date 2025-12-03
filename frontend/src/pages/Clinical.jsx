@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import api from '../services/api'
 
-const DR_BOT_ENGINE_URL = 'http://localhost:15602'
+const DR_BOT_ENGINE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4700'
 
 export default function Clinical({ user, setView }){
   const [cases, setCases] = useState([])
@@ -20,8 +20,7 @@ export default function Clinical({ user, setView }){
     { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', provider: 'Google', speed: 'Deep' },
   ]
 
-  const openSocraticCoach = () => {
-    window.open(`${DR_BOT_ENGINE_URL}/socratic`, '_blank')
+  const openSocraticCoach = async () => { try { const response = await api.post('/persona/route', { query: 'I would like Socratic coaching for a clinical case', context: { userType: 'medical_professional', urgency: 'low', preferredStyle: 'teaching' } }); console.log('Routed to persona:', response.data); window.open('/chat?persona=SAGE&mode=socratic', '_self'); } catch (err) { console.error('Persona routing error:', err); alert('Socratic Coach temporarily unavailable. Please use Chat feature.'); } }/socratic`, '_blank')
   }
 
   const loadCases = async () => {
