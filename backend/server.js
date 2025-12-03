@@ -134,6 +134,42 @@ const initDemoData = async () => {
     db.posts.set(post.id, post);
   }
 
+  
+  // Demo clinical cases
+  const demoCases = [
+    {
+      id: 'case-demo-1',
+      title: 'Amalgam Removal Dilemma',
+      description: 'Patient demands removal of 8 clinically sound amalgam fillings citing toxicity fears.',
+      createdAt: new Date('2024-12-01').toISOString(),
+      userId: 'user-demo-1',
+      status: 'resolved',
+      analysis: 'Bifurcation analysis completed - Patient autonomy vs clinical judgment'
+    },
+    {
+      id: 'case-demo-2', 
+      title: 'Teen Cosmetic Request',
+      description: 'Minor requesting extensive cosmetic dental work without clear medical indication.',
+      createdAt: new Date('2024-12-02').toISOString(),
+      userId: 'user-demo-2',
+      status: 'in-progress',
+      analysis: 'Exploring ethical considerations and parental consent dynamics'
+    },
+    {
+      id: 'case-demo-3',
+      title: 'Antibiotic Resistance Concern',
+      description: 'Recurring infections in post-surgical patient, standard antibiotics failing.',
+      createdAt: new Date('2024-12-03').toISOString(),
+      userId: 'user-demo-1',
+      status: 'active',
+      analysis: 'LOG3 analysis suggesting culture-driven approach vs empirical escalation'
+    }
+  ];
+  
+  for (const caseData of demoCases) {
+    db.clinicalCases.set(caseData.id, caseData);
+  }
+
   console.log('📊 Demo data initialized');
 };
 
