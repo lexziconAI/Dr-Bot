@@ -144,7 +144,7 @@ export default function Clinical({ user, setView }){
   const downloadMarkdown = () => {
     if (!result) return
     const text = result?.result?.text || result?.text || result?.content || JSON.stringify(result, null, 2)
-    const md = `# Dr. Bot Clinical Analysis\n\n**Job ID:** ${jobId}\n**Model:** ${selectedModel}\n**Date:** ${new Date().toISOString()}\n\n---\n\n${text}`
+    const md = `# Dr. Bot Clinical Analysis\n\n**Job ID:** ${jobId}\n**🔬 Model:** ${selectedModel}\n**Date:** ${new Date().toISOString()}\n\n---\n\n${text}`
     downloadBlob(md, `drbot-result-${jobId}.md`, 'text/markdown')
   }
 
@@ -158,13 +158,13 @@ export default function Clinical({ user, setView }){
     <div>
       {/* Hero Section */}
       <div className="hero">
-        <h2>���� Clinical Decision Support</h2>
+        <h2>🩺 Clinical Decision Support</h2>
         <p className="lead">
           Access Dr. Bot's AI-powered clinical reasoning engine. Get evidence-based insights, differential diagnoses, and Socratic coaching for complex cases.
         </p>
         <div style={{ marginTop: 20, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <button className="button button-large" onClick={openSocraticCoach}>
-            ���� Open Socratic Coach
+            🧠 Open Socratic Coach
           </button>
           <a 
             href={`${DR_BOT_ENGINE_URL}/socratic`} 
@@ -181,7 +181,7 @@ export default function Clinical({ user, setView }){
       <div className="grid-3" style={{marginBottom: 32}}>
         <div className="clinical-card" onClick={openSocraticCoach}>
           <div className="clinical-card-icon" style={{color:'var(--primary)'}}>����</div>
-          <h4>Socratic Coaching</h4>
+          <h4>🧠 Socratic Coaching</h4>
           <p>Interactive AI coaching that guides you through clinical reasoning with questions, not answers.</p>
           <span className="badge primary">Voice Enabled</span>
         </div>
@@ -190,12 +190,12 @@ export default function Clinical({ user, setView }){
           <div className="clinical-card-icon" style={{color:'var(--secondary)'}}>����</div>
           <h4>Quick Clinical Summary</h4>
           <p>Generate a structured clinical summary with differentials and recommended investigations.</p>
-          <span className="badge warning">Async Processing</span>
+          <span className="badge warning">Async⏳ Processing</span>
         </div>
         
         <div className="clinical-card" onClick={loadCases}>
           <div className="clinical-card-icon" style={{color:'var(--accent)'}}>����</div>
-          <h4>Case Library</h4>
+          <h4>📚 Case Library</h4>
           <p>Browse anonymized clinical cases for learning and reference. Explore bifurcation analyses.</p>
           <span className="badge success">Educational</span>
         </div>
@@ -242,7 +242,7 @@ export default function Clinical({ user, setView }){
               onClick={submitQuery} 
               disabled={loading || !query.trim()}
             >
-              {loading ? <span className="spinner"></span> : '🚀'} Submit Query
+              {loading ? <span className="spinner"></span> : '🚀'}🚀 Submit Query
             </button>
             <button 
               className="button button-secondary" 
@@ -257,7 +257,7 @@ export default function Clinical({ user, setView }){
 
       {!user && (
         <div className="card" style={{ textAlign: 'center', padding: 40 }}>
-          <h3>���� Sign in Required</h3>
+          <h3>🔐 Sign in Required</h3>
           <p className="text-muted" style={{ marginTop: 8 }}>Please sign in to submit clinical queries. You can still access the Socratic Coach above.</p>
         </div>
       )}
@@ -271,7 +271,7 @@ export default function Clinical({ user, setView }){
               <span className={`badge ${jobState === 'completed' ? 'success' : jobState === 'failed' ? 'danger' : 'warning'}`}>
                 {jobState === 'completed' ? 'ԣ� Completed' : 
                  jobState === 'failed' ? 'ԣ� Failed' : 
-                 'ԃ� Processing...'}
+                 '⏳ Processing...'}
               </span>
             </div>
             {polling && <span className="text-muted">Updating...</span>}
@@ -286,10 +286,10 @@ export default function Clinical({ user, setView }){
               {!result.error && (
                 <div style={{display:'flex', gap:12}}>
                   <button className="button button-secondary" onClick={downloadJSON}>
-                    ���� Download JSON
+                    📥 Download JSON
                   </button>
                   <button className="button button-secondary" onClick={downloadMarkdown}>
-                    ���� Download Markdown
+                    📝 Download Markdown
                   </button>
                 </div>
               )}
@@ -298,10 +298,10 @@ export default function Clinical({ user, setView }){
         </div>
       )}
 
-      {/* Case Library */}
+      {/*📚 Case Library */}
       {cases.length > 0 && (
         <div className="card">
-          <h3>���� Case Library</h3>
+          <h3>📚 Case Library</h3>
           <div style={{marginTop:16, display:'flex', flexDirection:'column', gap:12}}>
             {cases.map(c => (
               <div key={c.id} style={{padding:12, background:'rgba(255,255,255,0.05)', borderRadius:8}}>
