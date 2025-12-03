@@ -2,6 +2,8 @@
 // Healthcare Professional Social Network with AI Clinical Support
 
 const express = require('express');
+const { PERSONAS, routeToPersona, generateAttractorPath } = require('./persona_router');
+
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -843,6 +845,43 @@ app.get('/api/notifications', authMiddleware, (req, res) => {
 // ============================================================
 // CLINICAL CASES (LOG 3 & 4 Integration)
 // ============================================================
+
+
+// ============================================================
+// PERSONA ROUTING (LOG/LOG Architecture)
+// ============================================================
+
+// Route query to appropriate persona
+app.post('/api/persona/route', authMiddleware, async (req, res) => {
+  try {
+    const { query, urgency, userType, topic } = req.body;
+    const routing = routeToPersona(query, { urgency, userType, topic });
+    res.json({ success: true, routing });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get all available personas
+app.get('/api/persona/list', (req, res) => {
+  res.json({ success: true, personas: Object.values(PERSONAS) });
+});
+
+// Generate chaos attractor visualization
+app.post('/api/persona/attractor', authMiddleware, async (req, res) => {
+  try {
+    const { persona, history } = req.body;
+    const personaObj = PERSONAS[persona.toUpperCase()];
+    if (!personaObj) {
+      return res.status(400).json({ error: 'Invalid persona' });
+    }
+    const path = generateAttractorPath(personaObj, history || []);
+    res.json({ success: true, attractor: personaObj.chaosAttractor, path });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // Get clinical cases
 app.get('/api/clinical/cases', optionalAuth, (req, res) => {
