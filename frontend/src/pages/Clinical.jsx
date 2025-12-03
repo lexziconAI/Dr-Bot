@@ -172,7 +172,7 @@ export default function Clinical({ user, setView }){
             rel="noopener noreferrer"
             className="button button-large button-secondary"
           >
-            ���� Direct Link to Coach
+            🔗 Direct Link to Coach
           </a>
         </div>
       </div>
@@ -180,29 +180,29 @@ export default function Clinical({ user, setView }){
       {/* Quick Actions Grid */}
       <div className="grid-3" style={{marginBottom: 32}}>
         <div className="clinical-card" onClick={openSocraticCoach}>
-          <div className="clinical-card-icon" style={{color:'var(--primary)'}}>����</div>
+          <div className="clinical-card-icon" style={{color:'var(--primary)'}}>🧠</div>
           <h4>🧠 Socratic Coaching</h4>
           <p>Interactive AI coaching that guides you through clinical reasoning with questions, not answers.</p>
           <span className="badge primary">Voice Enabled</span>
         </div>
         
         <div className="clinical-card" onClick={submitQuickSummary} style={{ cursor: user ? 'pointer' : 'not-allowed', opacity: user ? 1 : 0.6 }}>
-          <div className="clinical-card-icon" style={{color:'var(--secondary)'}}>����</div>
-          <h4>Quick Clinical Summary</h4>
+          <div className="clinical-card-icon" style={{color:'var(--secondary)'}}>📋</div>
+          <h4>📋 Quick Clinical Summary</h4>
           <p>Generate a structured clinical summary with differentials and recommended investigations.</p>
-          <span className="badge warning">Async⏳ Processing</span>
+          <span className="badge warning">Async ⏳ Processing</span>
         </div>
         
         <div className="clinical-card" onClick={loadCases}>
-          <div className="clinical-card-icon" style={{color:'var(--accent)'}}>����</div>
+          <div className="clinical-card-icon" style={{color:'var(--accent)'}}>📚</div>
           <h4>📚 Case Library</h4>
           <p>Browse anonymized clinical cases for learning and reference. Explore bifurcation analyses.</p>
           <span className="badge success">Educational</span>
         </div>
 
         <div className="clinical-card" onClick={() => setView && setView('fractal')}>
-          <div className="clinical-card-icon" style={{color:'#c084fc'}}>����</div>
-          <h4>Fractal Research</h4>
+          <div className="clinical-card-icon" style={{color:'#c084fc'}}>🔬</div>
+          <h4>🔬 Fractal Research</h4>
           <p>Run LOG3/LOG4 bifurcation experiments on wicked problems using the Constitutional AI framework.</p>
           <span className="badge" style={{background:'rgba(192, 132, 252, 0.15)', color:'#c084fc'}}>Advanced</span>
         </div>
@@ -212,7 +212,7 @@ export default function Clinical({ user, setView }){
       {user && (
         <div className="card">
           <div className="card-header">
-            <h3>��Ƽ Ask Dr. Bot</h3>
+            <h3>🤖 Ask Dr. Bot</h3>
             <select 
               value={selectedModel} 
               onChange={(e) => setSelectedModel(e.target.value)}
@@ -242,7 +242,7 @@ export default function Clinical({ user, setView }){
               onClick={submitQuery} 
               disabled={loading || !query.trim()}
             >
-              {loading ? <span className="spinner"></span> : '🚀'}🚀 Submit Query
+              {loading ? <span className="spinner"></span> : '🚀'} Submit Query
             </button>
             <button 
               className="button button-secondary" 
@@ -269,8 +269,8 @@ export default function Clinical({ user, setView }){
             <div style={{display:'flex', alignItems:'center', gap:12}}>
               <strong>Job #{jobId}</strong>
               <span className={`badge ${jobState === 'completed' ? 'success' : jobState === 'failed' ? 'danger' : 'warning'}`}>
-                {jobState === 'completed' ? 'ԣ� Completed' : 
-                 jobState === 'failed' ? 'ԣ� Failed' : 
+                {jobState === 'completed' ? '✅ Completed' : 
+                 jobState === 'failed' ? '❌ Failed' : 
                  '⏳ Processing...'}
               </span>
             </div>
@@ -298,7 +298,7 @@ export default function Clinical({ user, setView }){
         </div>
       )}
 
-      {/*📚 Case Library */}
+      {/* 📚 Case Library */}
       {cases.length > 0 && (
         <div className="card">
           <h3>📚 Case Library</h3>
@@ -315,13 +315,13 @@ export default function Clinical({ user, setView }){
 
       {/* Info Card */}
       <div className="card" style={{ marginTop: 24, background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%)' }}>
-        <h4>���� Engine Diagnostics</h4>
+        <h4>🔬 Engine Diagnostics</h4>
         <p className="text-muted" style={{ marginBottom: 12, fontSize: 13 }}>
           Advanced users can access the underlying engine status. Note: The engine root may display "Kea V4" (Voice Module) - this is normal.
         </p>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', fontSize: 13 }}>
           <a href={`${DR_BOT_ENGINE_URL}/`} target="_blank" rel="noopener noreferrer" className="text-primary">Engine Status</a>
-          <span className="text-muted">���</span>
+          <span className="text-muted">•</span>
           <a href={`${DR_BOT_ENGINE_URL}/api/models/limits`} target="_blank" rel="noopener noreferrer" className="text-primary">Model Limits</a>
         </div>
       </div>
