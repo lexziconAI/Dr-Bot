@@ -79,9 +79,10 @@ function routeToPersona(query, context = {}) {
   const selectedPersona = selectPersona(contextScore, patterns);
   
   return {
-    persona: selectedPersona,
+    selectedPersona: selectedPersona,
     reasoning: contextScore,
     confidence: calculateConfidence(contextScore),
+    patterns: patterns,
     fallback: determineFallback(selectedPersona, patterns)
   };
 }
@@ -186,13 +187,13 @@ function selectPersona(scores, patterns) {
   // If scores are close (within 10 points), use ensemble mode
   const closeScores = Object.values(scores).filter(s => Math.abs(s - maxScore) < 10);
   if (closeScores.length > 1) {
-    return 'ensemble'; // Multiple personas collaborate
+    return 'ENSEMBLE'; // Multiple personas collaborate
   }
   
-  // Select highest scoring persona
-  if (scores.swift === maxScore) return PERSONAS.SWIFT;
-  if (scores.ethos === maxScore) return PERSONAS.ETHOS;
-  return PERSONAS.SAGE; // Default to teaching
+  // Select highest scoring persona - return NAME not object
+  if (scores.swift === maxScore) return 'SWIFT';
+  if (scores.ethos === maxScore) return 'ETHOS';
+  return 'SAGE'; // Default to teaching
 }
 
 /**
@@ -214,9 +215,9 @@ function calculateConfidence(scores) {
  * Determine fallback persona if primary fails
  */
 function determineFallback(primary, patterns) {
-  if (primary === PERSONAS.SWIFT) return PERSONAS.SAGE;
-  if (primary === PERSONAS.ETHOS) return PERSONAS.SAGE;
-  return PERSONAS.SWIFT; // SAGE fallback is SWIFT for safety
+  if (primary === 'SWIFT') return 'SAGE';
+  if (primary === 'ETHOS') return 'SAGE';
+  return 'SWIFT'; // SAGE fallback is SWIFT for safety
 }
 
 /**
@@ -258,25 +259,25 @@ function calculateValue(rewards, persona, gamma) {
 /**
  * Chaos attractor visualization for decision dynamics
  */
-function generateAttractorPath(persona, decisionHistory) {
-  const attractor = persona.chaosAttractor;
-  
-  if (attractor === 'lorenz') {
-    return lorenzAttractor(decisionHistory);
-  } else if (attractor === 'chen') {
-    return chenAttractor(decisionHistory);
+function generateAttractorPath(attractorType, steps = 100, principles = []) {
+  if (attractorType === 'lorenz') {
+    return lorenzAttractor(steps);
+  } else if (attractorType === 'chen') {
+    return chenAttractor(steps);
+  } else if (attractorType === 'quantum') {
+    return quantumSuperposition(principles);
   } else {
-    return quantumSuperposition(decisionHistory);
+    throw new Error(`Unknown attractor type: ${attractorType}`);
   }
 }
 
-function lorenzAttractor(history) {
+function lorenzAttractor(steps = 100) {
   // Lorenz system: dx/dt = σ(y-x), dy/dt = x(ρ-z)-y, dz/dt = xy-βz
   const sigma = 10, rho = 28, beta = 8/3;
   const points = [];
   
   let x = 0.1, y = 0, z = 0;
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < steps; i++) {
     const dx = sigma * (y - x);
     const dy = x * (rho - z) - y;
     const dz = x * y - beta * z;
@@ -288,16 +289,16 @@ function lorenzAttractor(history) {
     points.push({ x, y, z, step: i });
   }
   
-  return points;
+  return { type: 'lorenz', points, parameters: { sigma, rho, beta } };
 }
 
-function chenAttractor(history) {
+function chenAttractor(steps = 100) {
   // Chen system: dx/dt = a(y-x), dy/dt = (c-a)x-xz+cy, dz/dt = xy-bz
   const a = 35, b = 3, c = 28;
   const points = [];
   
   let x = 0.1, y = 0, z = 0;
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < steps; i++) {
     const dx = a * (y - x);
     const dy = (c - a) * x - x * z + c * y;
     const dz = x * y - b * z;
@@ -309,14 +310,15 @@ function chenAttractor(history) {
     points.push({ x, y, z, step: i });
   }
   
-  return points;
+  return { type: 'chen', points, parameters: { a, b, c } };
 }
 
-function quantumSuperposition(history) {
-  // Quantum state |ψ⟩ = α|autonomy⟩ + β|beneficence⟩ + γ|justice⟩
-  const points = [];
+function quantumSuperposition(principles = ['autonomy', 'beneficence', 'non-maleficence', 'justice']) {
+  // Quantum state superposition for ethical principles
+  const states = [];
+  const norm = Math.sqrt(principles.length);
   
-  for (let i = 0; i < 100; i++) {
+  for (const principle of principles) {
     const theta = (i / 100) * 2 * Math.PI;
     const alpha = Math.cos(theta);
     const beta = Math.sin(theta);
