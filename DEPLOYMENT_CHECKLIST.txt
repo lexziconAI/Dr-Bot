@@ -1,0 +1,228 @@
+╔══════════════════════════════════════════════════════════════╗
+║       DrBot Community - Render Deployment Checklist          ║
+╚══════════════════════════════════════════════════════════════╝
+
+✅ = Complete | ⏳ = In Progress | ❌ = Not Started
+
+PRE-DEPLOYMENT
+══════════════════════════════════════════════════════════════
+
+[ ] 1. Code Ready
+    - All files committed to git
+    - render.yaml exists in repo root
+    - .env files NOT committed (in .gitignore)
+    - Health check endpoint working (/api/health)
+
+[ ] 2. GitHub Setup
+    - Repo exists: https://github.com/lexziconAI/Dr-Bot.git
+    - Code pushed to main branch
+    - Render has access to repo
+
+[ ] 3. API Keys Ready
+    - Open DRBOT_API_KEYS.txt
+    - All 4 essential keys available:
+      [ ] ANTHROPIC_API_KEY
+      [ ] OPENAI_API_KEY  
+      [ ] GROQ_API_KEY
+      [ ] GEMINI_API_KEY
+
+
+RENDER DEPLOYMENT
+══════════════════════════════════════════════════════════════
+
+[ ] 4. Create Render Account
+    - Sign up at https://render.com
+    - Connect GitHub account
+    - Verify email
+
+[ ] 5. Deploy Blueprint (EASIEST METHOD)
+    - Go to: https://dashboard.render.com/blueprints
+    - Click "New Blueprint Instance"
+    - Select repo: lexziconAI/Dr-Bot
+    - Branch: main
+    - Root directory: axiom-x/DrBotCommunity
+    - Click "Apply"
+    - Wait for services to create (~5 minutes)
+
+[ ] 6. Set Environment Variables
+    Backend service → Environment tab → Add:
+    
+    REQUIRED (Must set these!):
+    [ ] ANTHROPIC_API_KEY=sk-ant-api03-su20YcuS...
+    [ ] OPENAI_API_KEY=sk-proj-do5ncgeY...
+    [ ] GROQ_API_KEY=gsk_oxqYcd8rIhCp...
+    [ ] GEMINI_API_KEY=AIzaSyCFe1c5oJi9...
+    
+    OPTIONAL (if you want weather features):
+    [ ] OPENWEATHER_API_KEY=d7ab6944b579...
+    [ ] NIWA_API_KEY=b7c28d8db100...
+    [ ] NIWA_CUSTOMER_ID=9764473635132
+    [ ] NIWA_EMAIL=regan@axiomintelligence.co.nz
+    
+    OPTIONAL (if you want email notifications):
+    [ ] SENDGRID_API_KEY=SG.pQrGTd_JRA...
+    [ ] SENDGRID_FROM_EMAIL=regan@axiomintelligence.co.nz
+
+[ ] 7. Save & Redeploy
+    - Click "Save Changes"
+    - Render will automatically redeploy
+    - Watch logs for any errors
+
+
+POST-DEPLOYMENT TESTING
+══════════════════════════════════════════════════════════════
+
+[ ] 8. Backend Health Check
+    URL: https://drbot-community-backend.onrender.com/api/health
+    Expected: {"status":"ok","timestamp":1733...}
+
+[ ] 9. Frontend Loads
+    URL: https://drbot-community-frontend.onrender.com
+    Expected: DrBot Community login page appears
+
+[ ] 10. Test Login/Register
+    - Create a test account
+    - Verify JWT token stored
+    - Login works
+
+[ ] 11. Test Clinical AI Features
+    - Navigate to Clinical tab
+    - Try "Quick Summary" button
+    - Should return mock job (sidecar unavailable)
+    - No 500 errors in console
+
+[ ] 12. Check Service Status
+    All services show "Live" in Render dashboard:
+    [ ] drbot-community-backend (green)
+    [ ] drbot-community-frontend (green)
+    [ ] drbot-redis (green)
+
+
+OPTIONAL ENHANCEMENTS
+══════════════════════════════════════════════════════════════
+
+[ ] 13. Custom Domain
+    - Add domain in Render service settings
+    - Update DNS records
+    - Enable HTTPS (automatic)
+
+[ ] 14. Upgrade to Paid Plan
+    - Backend: $7/month (no sleep, always-on)
+    - Prevents 15-minute sleep on free tier
+
+[ ] 15. Enable Monitoring
+    - Set up log drains
+    - Configure alerts
+    - Monitor API usage
+
+[ ] 16. Deploy Sidecar Service
+    - For real job queue (not mock)
+    - Separate Render service
+    - Update SIDECAR_URL env var
+
+
+TROUBLESHOOTING
+══════════════════════════════════════════════════════════════
+
+Backend won't start:
+→ Check logs: Render dashboard → Service → Logs
+→ Verify all REQUIRED env vars are set
+→ Check build command succeeded
+
+Frontend shows blank page:
+→ Check browser console for errors
+→ Verify VITE_API_URL env var
+→ Check backend is running
+
+Network errors:
+→ Backend might be sleeping (free tier)
+→ Wait 10-20 seconds for wake-up
+→ Or upgrade to paid plan
+
+500 errors:
+→ Check missing API keys
+→ Verify API keys are valid
+→ Check Render logs for details
+
+
+SUCCESS CHECKLIST
+══════════════════════════════════════════════════════════════
+
+Your deployment is successful when:
+
+✅ Backend health check returns 200 OK
+✅ Frontend loads without errors
+✅ Can register and login
+✅ Clinical features work (even with mock jobs)
+✅ No 500 errors in browser console
+✅ Services stay online for 24+ hours
+
+
+URLS TO BOOKMARK
+══════════════════════════════════════════════════════════════
+
+Render Dashboard:
+https://dashboard.render.com
+
+Your Backend:
+https://drbot-community-backend.onrender.com
+
+Your Frontend:
+https://drbot-community-frontend.onrender.com
+
+Backend Health:
+https://drbot-community-backend.onrender.com/api/health
+
+Backend API Docs:
+https://drbot-community-backend.onrender.com/api/docs
+
+
+NEXT STEPS AFTER DEPLOYMENT
+══════════════════════════════════════════════════════════════
+
+1. Share the frontend URL with users
+2. Monitor usage and costs
+3. Set up custom domain (optional)
+4. Configure backup/disaster recovery
+5. Enable monitoring and alerts
+6. Document any custom configuration
+7. Train team on deployment process
+
+
+MAINTENANCE
+══════════════════════════════════════════════════════════════
+
+Weekly:
+- Check service health
+- Review error logs
+- Monitor API costs
+
+Monthly:
+- Review and optimize
+- Check for security updates
+- Rotate API keys (every 90 days)
+
+When deploying updates:
+- git push to main branch
+- Render auto-deploys
+- Monitor logs during deployment
+- Test after deployment completes
+
+
+SUPPORT
+══════════════════════════════════════════════════════════════
+
+Render Support: https://render.com/docs
+DrBot Issues: GitHub Issues tab
+Questions: regan@axiomintelligence.co.nz
+
+═══════════════════════════════════════════════════════════════
+
+🎉 CONGRATULATIONS! 
+
+Once all checkboxes are complete, your DrBot Community 
+platform will be live and stable on Render!
+
+No more dropped connections! 🚀
+
+═══════════════════════════════════════════════════════════════

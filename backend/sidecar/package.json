@@ -1,0 +1,13 @@
+{
+  "name": "drbot-sidecar",
+  "version": "0.1.0",
+  "description": "Lightweight sidecar worker for DrBoT Community (prototype)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  }
+}

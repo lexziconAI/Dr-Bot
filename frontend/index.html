@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/drbot-icon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DrBoT Community - Professional Healthcare Social Network with AI Clinical Decision Support" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <title>DrBoT Community</title>
+  
+  <!-- Preconnect to API -->
+  <link rel="preconnect" href="http://localhost:4700" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* Critical CSS for loading state */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0c4a6e 0%, #164e63 50%, #134e4a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #root {
+      width: 100%;
+      min-height: 100vh;
+    }
+    
+    .loading-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: white;
+    }
+    
+    .loading-logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .loading-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top-color: #22d3ee;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+    
+    .loading-subtitle {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <!-- Loading state shown before React hydrates -->
+    <div class="loading-screen">
+      <!-- DrBoT Logo SVG -->
+      <svg class="loading-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Stethoscope + AI Brain icon -->
+        <circle cx="60" cy="60" r="55" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+        <circle cx="60" cy="60" r="45" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+        
+        <!-- Brain outline -->
+        <path d="M40 55 C35 45, 45 35, 55 35 C60 30, 70 30, 75 35 C85 35, 95 45, 90 55 C95 65, 85 80, 75 80 C70 85, 50 85, 45 80 C35 80, 25 65, 40 55 Z" 
+              stroke="#22d3ee" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        
+        <!-- Brain neural connections -->
+        <circle cx="50" cy="50" r="4" fill="#22d3ee"/>
+        <circle cx="70" cy="50" r="4" fill="#22d3ee"/>
+        <circle cx="60" cy="65" r="4" fill="#22d3ee"/>
+        <line x1="50" y1="50" x2="70" y2="50" stroke="#22d3ee" stroke-width="1.5"/>
+        <line x1="50" y1="50" x2="60" y2="65" stroke="#22d3ee" stroke-width="1.5"/>
+        <line x1="70" y1="50" x2="60" y2="65" stroke="#22d3ee" stroke-width="1.5"/>
+        
+        <!-- Pulse line -->
+        <path d="M20 95 L35 95 L40 85 L45 105 L50 90 L55 95 L100 95" 
+              stroke="#10b981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      
+      <div class="loading-text">DrBoT Community</div>
+      <div class="loading-spinner"></div>
+      <div class="loading-subtitle">AI-Powered Clinical Decision Support</div>
+    </div>
+  </div>
+  
+  <!-- Vite injects the React app here -->
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

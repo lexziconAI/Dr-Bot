@@ -1,0 +1,111 @@
+services:
+  # ============================================================
+  # DrBotCommunity Backend API
+  # ============================================================
+  - type: web
+    name: drbot-community-backend
+    runtime: node
+    region: oregon
+    plan: starter
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      # Core Configuration
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      
+      # AI Service API Keys (REQUIRED - Set in Render Dashboard)
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      
+      # AI Models
+      - key: ANTHROPIC_SONNET_MODEL
+        value: claude-sonnet-4-5-20250929
+      - key: ANTHROPIC_HAIKU_MODEL
+        value: claude-haiku-4-5
+      - key: GROQ_LLAMA_MODEL
+        value: llama-3.3-70b-versatile
+      - key: GROQ_BASE_URL
+        value: https://api.groq.com/openai/v1
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      
+      # Redis Job Queue (auto-connected)
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: drbot-redis
+          property: connectionString
+      
+      # External Services (Optional)
+      - key: SIDECAR_URL
+        value: http://localhost:4800
+      - key: MRBOT_URL
+        value: http://localhost:15602
+      
+      # Frontend URL (for CORS)
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: drbot-community-frontend
+          envVarKey: RENDER_EXTERNAL_URL
+      
+      # Weather APIs (Optional)
+      - key: OPENWEATHER_API_KEY
+        sync: false
+      - key: NIWA_API_KEY
+        sync: false
+      - key: NIWA_CUSTOMER_ID
+        sync: false
+      - key: NIWA_EMAIL
+        sync: false
+      
+      # Email (Optional)
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: SENDGRID_FROM_EMAIL
+        sync: false
+      
+    healthCheckPath: /api/health
+    autoDeploy: true
+    
+  # ============================================================
+  # DrBotCommunity Frontend (Static Site)
+  # ============================================================
+  - type: web
+    name: drbot-community-frontend
+    runtime: static
+    region: oregon
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: drbot-community-backend
+          envVarKey: RENDER_EXTERNAL_URL
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    pullRequestPreviewsEnabled: true
+    autoDeploy: true
+        
+  # ============================================================
+  # Redis for Job Queue (BullMQ)
+  # ============================================================
+  - type: redis
+    name: drbot-redis
+    ipAllowList: []
+    plan: starter
+    maxmemoryPolicy: allkeys-lru

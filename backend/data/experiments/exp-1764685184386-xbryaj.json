@@ -1,0 +1,24 @@
+{
+  "experimentId": "exp-1764685184386-xbryaj",
+  "timestamp": "2025-12-02T14:19:44.866Z",
+  "problem": "dental-amalgam",
+  "problemTitle": "The Amalgam Removal Request",
+  "mode": "log4",
+  "pathCount": 0,
+  "successCount": 0,
+  "completions": [],
+  "metrics": {
+    "avgJaccard": 0,
+    "wordDivergence": 1,
+    "conclusionConvergence": 0,
+    "dominantConclusion": "NONE",
+    "conclusionDistribution": {},
+    "yamaStats": {
+      "min": 0,
+      "max": 0,
+      "mean": 0,
+      "variance": 0
+    }
+  },
+  "logs": []
+}
